@@ -1,3 +1,5 @@
+"use client";
+
 import { BrowserProvider, ethers, JsonRpcSigner } from "ethers";
 import { useToast } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";

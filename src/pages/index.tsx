@@ -25,6 +25,9 @@ export default function Home() {
 
   return (
     <div>
+      <div className="flex">
+        
+      </div>
       <HStack
         width="full"
         as="header"
