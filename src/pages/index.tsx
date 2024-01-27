@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import Head from "next/head";
 import {
   Box,
   Button,
@@ -26,9 +25,6 @@ export default function Home() {
 
   return (
     <div>
-      <Head>
-        <title>Mint NFTs</title>
-      </Head>
       <HStack
         width="full"
         as="header"
