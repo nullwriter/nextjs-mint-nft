@@ -1,9 +1,11 @@
 import Hero from '@/components/hero';
+import Meta from '@/components/meta';
 import WalletConnectButton from '@/components/wallet-connect-button';
 
 export default function Home() {
   return (
     <div>
+      <Meta />
       <Hero />
       <WalletConnectButton />
       <section className="text-gray-600 body-font">
