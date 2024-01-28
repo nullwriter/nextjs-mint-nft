@@ -1,6 +1,6 @@
-import Hero from '@/components/hero';
-import Meta from '@/components/meta';
-import WalletConnectButton from '@/components/wallet-connect-button';
+import Hero from '@/components/shared/hero';
+import Meta from '@/components/shared/meta';
+import WalletConnectButton from '@/components/shared/wallet-connect-button';
 
 export default function Home() {
   return (
