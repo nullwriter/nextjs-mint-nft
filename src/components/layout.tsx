@@ -1,4 +1,6 @@
 import { Providers } from '@/providers/providers';
+import Header from './header';
+import Footer from './footer';
 
 export default function RootLayout({
   children,
@@ -6,8 +8,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="w-full flex flex-col sm:flex-row flex-grow overflow-hidden">
-      <Providers>{children}</Providers>
+    <div className="text-white bg-black">
+      <Providers>
+        <Header />
+        {children}
+        <Footer />
+      </Providers>
     </div>
   );
 }
