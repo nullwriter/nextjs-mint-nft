@@ -2,7 +2,7 @@ import Hero from '@/components/shared/hero';
 import Meta from '@/components/shared/meta';
 import WalletConnectButton from '@/components/shared/wallet-connect-button';
 
-export default function Home() {
+const Home = () => {
   return (
     <div>
       <Meta />
@@ -21,3 +21,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

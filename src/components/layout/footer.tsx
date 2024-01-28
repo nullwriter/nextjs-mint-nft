@@ -3,7 +3,7 @@ import { FaTwitter } from "react-icons/fa";
 import { Icon } from '@chakra-ui/react';
 import { seoDefaultContent } from '@/utils/seo';
 
-export default function Footer() {
+const Footer = () => {
   return (
     <footer className="text-white body-font">
       <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
@@ -22,3 +22,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default Footer;

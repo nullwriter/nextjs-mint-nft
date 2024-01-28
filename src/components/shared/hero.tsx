@@ -1,5 +1,4 @@
-
-export default function Hero() {
+const Hero = () => {
   return (
     <section className="text-black body-font lg:pt-20">
       <div className="container px-5 pt-32 mx-auto lg:px-4 lg:py-4">
@@ -16,3 +15,5 @@ export default function Hero() {
     </section>
   );
 }
+
+export default Hero;

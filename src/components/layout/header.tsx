@@ -1,7 +1,7 @@
 import Nav from './nav';
 import { seoDefaultContent } from '@/utils/seo';
 
-export default function Header() {
+const Header = () => {
   return (
     <header className="text-white body-font">
       <div className="container mx-auto flex flex-wrap p-5 md:flex-row">
@@ -13,3 +13,5 @@ export default function Header() {
     </header>
   );
 }
+
+export default Header;

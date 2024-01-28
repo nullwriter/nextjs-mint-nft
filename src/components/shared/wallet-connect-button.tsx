@@ -5,7 +5,7 @@ import { BiLogOut } from "react-icons/bi";
 
 const BSCTChainID = 97;
 
-export default function WalletConnectButton() {
+const WalletConnectButton = () => {
   const {
     connectWallet,
     disconnect,
@@ -53,3 +53,5 @@ export default function WalletConnectButton() {
       </HStack>
   );
 }
+
+export default WalletConnectButton;

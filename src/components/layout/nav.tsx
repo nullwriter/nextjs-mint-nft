@@ -1,4 +1,4 @@
-export default function Nav() {
+const Nav = () => {
   return (
     <>
       <div className="md:flex flex-grow items-center flex">
@@ -10,3 +10,5 @@ export default function Nav() {
     </>
   );
 }
+
+export default Nav;
