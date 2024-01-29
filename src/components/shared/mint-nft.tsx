@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Box, Image, Grid, GridItem, Container, Heading, Text, Stack } from '@chakra-ui/react'
 import WalletConnectButton from './wallet-connect-button';
 import { Button } from "@chakra-ui/react";
@@ -46,9 +46,13 @@ const MintNFT = () => {
     }
   };
   
+  React.useEffect(() => {
+    getMintedNFT();
+  }, [signerAddress]);
+  
   return (
     <Container maxW='container.sm'>
-      <Box className="w-100">
+      <Box className="w-100 flex justify-center">
         <Card size="lg" bg={'black'}>
           <CardBody>
             <WalletConnectButton bg="black" />
@@ -57,7 +61,6 @@ const MintNFT = () => {
       </Box>
       <Box className="w-100">
         <Card size="lg" className='mt-3'>
-          <CardHeader>Mint NFT</CardHeader>
           <CardBody className='flex justify-center'>
             <Button 
               colorScheme='whatsapp' 
@@ -65,15 +68,16 @@ const MintNFT = () => {
               isDisabled={!isAuthenticated || !isCorrectNetwork}
               onClick={mint}
               isLoading={miningStatus === 0}
+              className='mt-10'
             >
-              MINT
+              MINT TCBT
             </Button>
           </CardBody>
           <CardFooter>
             {isCorrectNetwork ? (
               <div>
                 <p className="text-green-500">{message}</p>
-                <p>Address: {address}</p>
+                {address && <p>Address: {address}</p>}
               </div>
             ) : (
               <p className="text-red-500">{message}</p>
@@ -94,13 +98,17 @@ const MintNFT = () => {
               </GridItem>
             ))}
           </Grid>
-        ) : (
+        ) : isAuthenticated ? (
           <Stack direction='column'>
             <Text fontSize='lg'>
-              You have no NFTs yet
+              You have no TCBT yet
             </Text>
             <Button size='sm' onClick={getMintedNFT}>Click here to check again</Button>
           </Stack>
+        ) : (
+          <Text fontSize='lg'>
+            Please connect your wallet to see your TCBT
+          </Text>
         )}
       </div>
     </Container>
