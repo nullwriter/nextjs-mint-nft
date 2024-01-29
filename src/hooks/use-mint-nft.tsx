@@ -7,9 +7,10 @@ interface MintNFTHookProps {
   contract: ethers.Contract | null;
   signerAddress: string;
   approveBUSD: () => Promise<boolean>;
+  getMintedNFT: (address: string) => Promise<void>;
 }
 
-const useMintNFT = ({ contract, signerAddress, approveBUSD }: MintNFTHookProps) => {
+const useMintNFT = ({ contract, signerAddress, approveBUSD, getMintedNFT }: MintNFTHookProps) => {
   const toast = useToast();
   const [loadingState, setLoadingState] = useState<number>(-1);
 
@@ -34,8 +35,16 @@ const useMintNFT = ({ contract, signerAddress, approveBUSD }: MintNFTHookProps) 
         }
 
         await nftTx.wait();
+        getMintedNFT(signerAddress);
+        toast({
+          title: 'Minted NFT successfully!',
+          description: 'Transaction: ' + nftTx.hash,
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
       } else {
-        console.log("Ethereum object doesn't exist!");
+        throw new Error('Contract is not loaded');
       }
     } catch (error) {
       if (error instanceof Error) {

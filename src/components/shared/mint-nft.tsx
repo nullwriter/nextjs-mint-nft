@@ -43,7 +43,7 @@ const MintNFT = () => {
     ERC721_CONTRACT_ADDRESS,
     MINT_PRICE
   });
-  const { mint, loadingState } = useMintNFT({ contract, signerAddress, approveBUSD });
+  const { mint, loadingState } = useMintNFT({ contract, signerAddress, approveBUSD, getMintedNFT });
 
   /************ State ************/
   const [paymentMethod, setPaymentMethod] = React.useState<string>(CRYPTO.BNB);
