@@ -38,7 +38,7 @@ const MintNFT = () => {
   const { contract, signerAddress, signer } = useContract(ERC721_CONTRACT_ADDRESS, ERC721ABI);
   const { isCorrectNetwork, message } = useCheckCorrectNetwork(currentChain);
   const { nfts, getMintedNFT } = useMintedNFTs(contract);
-  const { approveBUSD, isApproving } = useApproveBUSD({
+  const { approveBUSD } = useApproveBUSD({
     signer,
     ERC721_CONTRACT_ADDRESS,
     MINT_PRICE
