@@ -44,7 +44,6 @@ const MintNFT = () => {
 
   /************ State ************/
   const [paymentMethod, setPaymentMethod] = React.useState<string>('BUSD');
-  const [txError, setTxError] = React.useState<string>('');
   
   React.useEffect(() => {
     getMintedNFT();
@@ -108,11 +107,6 @@ const MintNFT = () => {
         ) : (
           <Text fontSize='lg'>
             Please connect your wallet to see your TCBT
-          </Text>
-        )}
-        {txError && (
-          <Text fontSize='lg' color='red.500'>
-            {txError}
           </Text>
         )}
       </Box>
