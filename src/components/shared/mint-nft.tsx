@@ -105,8 +105,8 @@ const MintNFT = () => {
         {(nfts.length > 0 && isAuthenticated) ? (
           <Grid templateColumns='repeat(4, 1fr)' gap={10}>
             {nfts.map((nftUrl: string, i: number) => (
-              <GridItem w='100%' h='100%'>
-                <Image sizes='sm' src={nftUrl} key={`nft-${i}`} />
+              <GridItem w='100%' h='100%' key={`nft-${i}`}>
+                <Image sizes='sm' src={nftUrl} />
               </GridItem>
             ))}
           </Grid>
