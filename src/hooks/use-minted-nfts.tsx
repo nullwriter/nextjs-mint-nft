@@ -7,7 +7,6 @@ const useMintedNFTs = (contract: any) => {
 
   const getMintedNFT = async (address: string | null): Promise<void> => {
     if (!contract || !address) {
-      console.error('Contract or address is not provided');
       return;
     }
 
