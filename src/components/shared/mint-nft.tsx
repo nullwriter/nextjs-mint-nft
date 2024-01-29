@@ -38,7 +38,6 @@ const MintNFT = () => {
   const { nfts, getMintedNFT } = useMintedNFTs(contract, signerAddress);
   const toast = useToast();
 
-  const [miningStatus, setMiningStatus] = React.useState<number>(-1);
   const [loadingState, setLoadingState] = React.useState<number>(-1);
   const [paymentMethod, setPaymentMethod] = React.useState<string>('BUSD');
   const [txError, setTxError] = React.useState<string>('');
@@ -83,7 +82,6 @@ const MintNFT = () => {
           nftTx = await contract.safeMintWithBUSD(signerAddress, amountBUSD);
         }
 
-        setMiningStatus(0);
         await nftTx.wait();
         getMintedNFT();
       } else {
@@ -100,7 +98,6 @@ const MintNFT = () => {
         });
       }
     } finally {
-      setMiningStatus(-1);
       setLoadingState(-1);
     }
   };
