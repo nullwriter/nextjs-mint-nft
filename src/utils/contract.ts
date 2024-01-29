@@ -994,12 +994,24 @@ export const ERC20ABI = [
 	}
 ];
 
-export const MINT_PRICE = {
+// Define types
+type MintPriceType = {
+  BNB: string;
+  BUSD: string;
+};
+
+type CryptoType = {
+  BNB: string;
+  BUSD: string;
+};
+
+// Define constants
+export const MINT_PRICE: MintPriceType = {
   BNB: '0.02',
   BUSD: '5',
 };
 
-export const CRYPTO = {
+export const CRYPTO: CryptoType = {
   BNB: 'BNB',
   BUSD: 'BUSD',
 };

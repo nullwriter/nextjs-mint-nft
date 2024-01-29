@@ -11,6 +11,8 @@ import {
   Heading, 
   Text, 
   Stack,
+  Select,
+  HStack
 } from '@chakra-ui/react'
 import WalletConnectButton from './wallet-connect-button';
 import { Button } from "@chakra-ui/react";
@@ -19,6 +21,7 @@ import {
   ERC721ABI, 
   ERC721_CONTRACT_ADDRESS,
   MINT_PRICE,
+  CRYPTO
 } from '@/utils/contract';
 import useContract from '@/hooks/use-contract';
 import useCheckCorrectNetwork from '@/hooks/use-check-correct-network';
@@ -43,8 +46,16 @@ const MintNFT = () => {
   const { mint, loadingState } = useMintNFT({ contract, signerAddress, approveBUSD });
 
   /************ State ************/
-  const [paymentMethod, setPaymentMethod] = React.useState<string>('BUSD');
+  const [paymentMethod, setPaymentMethod] = React.useState<string>(CRYPTO.BNB);
   
+  const handleChangeCrypto = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setPaymentMethod(event.target.value);
+  };
+
+  const getMintPrice = (): string => {
+    return MINT_PRICE[paymentMethod as keyof typeof CRYPTO];
+  }
+
   React.useEffect(() => {
     getMintedNFT(address);
   }, [address]);
@@ -61,16 +72,30 @@ const MintNFT = () => {
       <Box className="w-100">
         <Card size="lg" className='mt-3'>
           <CardBody className='flex justify-center'>
-            <Button 
-              colorScheme='whatsapp' 
-              size='lg' 
-              isDisabled={!isAuthenticated || !isCorrectNetwork}
-              onClick={() => mint(paymentMethod)}
-              isLoading={loadingState === 1}
-              className='mt-10'
-            >
-              MINT TCBT
-            </Button>
+            <HStack spacing='20px'>
+              <Box w="100px">
+                <Select 
+                  size="lg" 
+                  value={paymentMethod} 
+                  onChange={handleChangeCrypto}
+                  isDisabled={loadingState === 1}
+                >
+                  <option value={CRYPTO.BNB}>BNB</option>
+                  <option value={CRYPTO.BUSD}>BUSD</option>
+                </Select>
+              </Box>
+              <Button 
+                colorScheme='whatsapp' 
+                size='lg' 
+                isDisabled={!isAuthenticated || !isCorrectNetwork}
+                onClick={() => mint(paymentMethod)}
+                isLoading={loadingState === 1}
+              >
+                MINT
+              </Button>
+
+              <Text>{getMintPrice()} {paymentMethod}</Text>
+              </HStack>
           </CardBody>
           <CardFooter>
             {isCorrectNetwork ? (
