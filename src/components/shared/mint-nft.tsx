@@ -48,6 +48,7 @@ const MintNFT = () => {
       const amountBUSD = ethers.parseUnits(MINT_PRICE.BUSD, 18);
       let approveTx = await busdContract.approve(ERC721_CONTRACT_ADDRESS, amountBUSD);
       await approveTx.wait();
+      return true;
     } catch (error) {
       toast({
         title: 'Error approving allowance',
