@@ -19,15 +19,14 @@ import { useWeb3Context, IWeb3Context } from '@/contexts/web-3-context';
 import { ethers } from 'ethers';
 import { 
   ERC721ABI, 
-  ERC721_CONTRACT_ADDRESS, 
-  ERC20ABI, 
-  BUSD_CONTRACT_ADDRESS,
+  ERC721_CONTRACT_ADDRESS,
   MINT_PRICE,
   CRYPTO
 } from '@/utils/contract';
 import useContract from '@/hooks/use-contract';
 import useCheckCorrectNetwork from '@/hooks/use-check-correct-network';
 import useMintedNFTs from '@/hooks/use-minted-nfts';
+import useApproveBUSD from '@/hooks/use-approve-busd';
 
 const MintNFT = () => {
   const {
@@ -36,31 +35,16 @@ const MintNFT = () => {
   const { contract, signerAddress, signer } = useContract(ERC721_CONTRACT_ADDRESS, ERC721ABI);
   const { isCorrectNetwork, message } = useCheckCorrectNetwork(currentChain);
   const { nfts, getMintedNFT } = useMintedNFTs(contract, signerAddress);
+  const { approveBUSD, isApproving } = useApproveBUSD({
+    signer,
+    ERC721_CONTRACT_ADDRESS,
+    MINT_PRICE
+  });
   const toast = useToast();
 
   const [loadingState, setLoadingState] = React.useState<number>(-1);
   const [paymentMethod, setPaymentMethod] = React.useState<string>('BUSD');
   const [txError, setTxError] = React.useState<string>('');
-
-  const approveBUSD = async () => {
-    try {
-      const busdContract = new ethers.Contract(BUSD_CONTRACT_ADDRESS, ERC20ABI, signer);
-      const amountBUSD = ethers.parseUnits(MINT_PRICE.BUSD, 18);
-      let approveTx = await busdContract.approve(ERC721_CONTRACT_ADDRESS, amountBUSD);
-      await approveTx.wait();
-      return true;
-    } catch (error) {
-      toast({
-        title: 'Error approving allowance',
-        description: JSON.stringify(error, null, 2),
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-      return false;
-    }
-  };
-  
 
   const mint = async (): Promise<void> => {
     try {
@@ -74,7 +58,6 @@ const MintNFT = () => {
           });
         } else if (paymentMethod === CRYPTO.BUSD) {
           const approvalSuccessful = await approveBUSD();
-
           if (!approvalSuccessful) {
             return;
           }
