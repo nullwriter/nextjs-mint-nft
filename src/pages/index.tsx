@@ -9,7 +9,7 @@ const Home = () => {
       <Meta />
       <Hero />
       <section className="text-gray-600 body-font">
-        <div className="container px-3 py-24 mx-auto flex justify-center flex-wrap">
+        <div className="container px-3 pb-24 pt-10 mx-auto flex justify-center flex-wrap">
           <MintNFT />
         </div>
       </section>
