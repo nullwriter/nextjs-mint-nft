@@ -16,33 +16,62 @@ import WalletConnectButton from './wallet-connect-button';
 import { Button } from "@chakra-ui/react";
 import { useWeb3Context, IWeb3Context } from '@/contexts/web-3-context';
 import { ethers } from 'ethers';
-import { contractABI, contractAddress } from '@/utils/contract';
+import { ERC721ABI, ERC721_CONTRACT_ADDRESS, ERC20ABI, BUSD_CONTRACT_ADDRESS } from '@/utils/contract';
 import useContract from '@/hooks/use-contract';
 import useCheckCorrectNetwork from '@/hooks/use-check-correct-network';
 import useMintedNFTs from '@/hooks/use-minted-nfts';
+
+const MINT_PRICE = {
+  BNB: '0.02',
+  BUSD: '5',
+};
+
+const CRYPTO = {
+  BNB: 'BNB',
+  BUSD: 'BUSD',
+};
 
 const MintNFT = () => {
   const {
     state: { isAuthenticated, address, currentChain },
   } = useWeb3Context() as IWeb3Context;
-  const { contract, signerAddress } = useContract(contractAddress, contractABI);
+  const { contract, signerAddress, signer } = useContract(ERC721_CONTRACT_ADDRESS, ERC721ABI);
   const { isCorrectNetwork, message } = useCheckCorrectNetwork(currentChain);
   const { nfts, getMintedNFT } = useMintedNFTs(contract, signerAddress);
 
   const [miningStatus, setMiningStatus] = React.useState<number>(-1);
   const [loadingState, setLoadingState] = React.useState<number>(-1);
+  const [paymentMethod, setPaymentMethod] = React.useState<string>('BUSD');
+
+  const approveBUSD = async () => {
+    const busdContract = new ethers.Contract(BUSD_CONTRACT_ADDRESS, ERC20ABI, signer);
+    const amountBUSD = ethers.parseUnits(MINT_PRICE.BUSD, 18);
+
+    // Approve allowance
+    let approveTx = await busdContract.approve(ERC721_CONTRACT_ADDRESS, amountBUSD);
+    await approveTx.wait(); 
+  };
 
   const mint = async (): Promise<void> => {
     try {
       if (contract) {
-        let nftTx = await contract.safeMint(signerAddress, {
-          value: ethers.parseEther('0.05'),
-        });
+        setLoadingState(1);
+        let nftTx;
+        
+        if (paymentMethod === CRYPTO.BNB) {
+          nftTx = await contract.safeMint(signerAddress, {
+            value: ethers.parseEther(MINT_PRICE.BNB), // BNB payment
+          });
+        } else if (paymentMethod === CRYPTO.BUSD) {
+          approveBUSD();
+          const amountBUSD = ethers.parseUnits(MINT_PRICE.BUSD, 18); // BUSD payment
+          nftTx = await contract.safeMintWithBUSD(signerAddress, amountBUSD);
+        }
+
         console.log('Mining....', nftTx.hash);
         setMiningStatus(0);
 
         let tx = await nftTx.wait();
-        setLoadingState(1);
         console.log('Mined!', tx);
         getMintedNFT();
       } else {
