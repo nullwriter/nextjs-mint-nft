@@ -10,7 +10,8 @@ import {
   Container, 
   Heading, 
   Text, 
-  Stack 
+  Stack,
+  useToast
 } from '@chakra-ui/react'
 import WalletConnectButton from './wallet-connect-button';
 import { Button } from "@chakra-ui/react";
@@ -35,19 +36,31 @@ const MintNFT = () => {
   const { contract, signerAddress, signer } = useContract(ERC721_CONTRACT_ADDRESS, ERC721ABI);
   const { isCorrectNetwork, message } = useCheckCorrectNetwork(currentChain);
   const { nfts, getMintedNFT } = useMintedNFTs(contract, signerAddress);
+  const toast = useToast();
 
   const [miningStatus, setMiningStatus] = React.useState<number>(-1);
   const [loadingState, setLoadingState] = React.useState<number>(-1);
   const [paymentMethod, setPaymentMethod] = React.useState<string>('BUSD');
+  const [txError, setTxError] = React.useState<string>('');
 
   const approveBUSD = async () => {
-    const busdContract = new ethers.Contract(BUSD_CONTRACT_ADDRESS, ERC20ABI, signer);
-    const amountBUSD = ethers.parseUnits(MINT_PRICE.BUSD, 18);
-
-    // Approve allowance
-    let approveTx = await busdContract.approve(ERC721_CONTRACT_ADDRESS, amountBUSD);
-    await approveTx.wait(); 
+    try {
+      const busdContract = new ethers.Contract(BUSD_CONTRACT_ADDRESS, ERC20ABI, signer);
+      const amountBUSD = ethers.parseUnits(MINT_PRICE.BUSD, 18);
+      let approveTx = await busdContract.approve(ERC721_CONTRACT_ADDRESS, amountBUSD);
+      await approveTx.wait();
+    } catch (error) {
+      toast({
+        title: 'Error approving allowance',
+        description: JSON.stringify(error, null, 2),
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+      return false;
+    }
   };
+  
 
   const mint = async (): Promise<void> => {
     try {
@@ -60,23 +73,31 @@ const MintNFT = () => {
             value: ethers.parseEther(MINT_PRICE.BNB), // BNB payment
           });
         } else if (paymentMethod === CRYPTO.BUSD) {
-          approveBUSD();
+          const approvalSuccessful = await approveBUSD();
+
+          if (!approvalSuccessful) {
+            return;
+          }
+
           const amountBUSD = ethers.parseUnits(MINT_PRICE.BUSD, 18); // BUSD payment
           nftTx = await contract.safeMintWithBUSD(signerAddress, amountBUSD);
         }
 
-        console.log('Mining....', nftTx.hash);
         setMiningStatus(0);
-
-        let tx = await nftTx.wait();
-        console.log('Mined!', tx);
+        await nftTx.wait();
         getMintedNFT();
       } else {
         console.log("Ethereum object doesn't exist!");
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.log('Error minting', error);
+        toast({
+          title: 'Error minting',
+          description: JSON.stringify(error, null, 2),
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
       }
     } finally {
       setMiningStatus(-1);
@@ -105,7 +126,7 @@ const MintNFT = () => {
               size='lg' 
               isDisabled={!isAuthenticated || !isCorrectNetwork}
               onClick={mint}
-              isLoading={miningStatus === 0}
+              isLoading={loadingState === 1}
               className='mt-10'
             >
               MINT TCBT
@@ -146,6 +167,11 @@ const MintNFT = () => {
         ) : (
           <Text fontSize='lg'>
             Please connect your wallet to see your TCBT
+          </Text>
+        )}
+        {txError && (
+          <Text fontSize='lg' color='red.500'>
+            {txError}
           </Text>
         )}
       </Box>
