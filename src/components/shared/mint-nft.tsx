@@ -102,7 +102,7 @@ const MintNFT = () => {
             <Text fontSize='lg'>
               You have no TCBT yet
             </Text>
-            <Button size='sm' onClick={getMintedNFT}>Click here to check again</Button>
+            <Button size='sm' onClick={() => getMintedNFT(address)}>Click here to check again</Button>
           </Stack>
         ) : (
           <Text fontSize='lg'>
