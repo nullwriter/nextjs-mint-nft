@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Box, Image } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter, Box, Image, Grid, GridItem, Container, Heading, Text, Stack } from '@chakra-ui/react'
 import WalletConnectButton from './wallet-connect-button';
 import { Button } from "@chakra-ui/react";
 import { useWeb3Context, IWeb3Context } from '@/contexts/web-3-context';
@@ -32,6 +32,7 @@ const MintNFT = () => {
         let tx = await nftTx.wait();
         setLoadingState(1);
         console.log('Mined!', tx);
+        getMintedNFT();
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -46,7 +47,7 @@ const MintNFT = () => {
   };
   
   return (
-    <div className='w-100'>
+    <Container maxW='container.sm'>
       <Box className="w-100">
         <Card size="lg" bg={'black'}>
           <CardBody>
@@ -67,9 +68,6 @@ const MintNFT = () => {
             >
               MINT
             </Button>
-            <Button onClick={getMintedNFT}>
-              tokens of owner
-            </Button>
           </CardBody>
           <CardFooter>
             {isCorrectNetwork ? (
@@ -82,15 +80,30 @@ const MintNFT = () => {
             )}
           </CardFooter>
         </Card>
-        <div className='flex'>
-          {nfts.map((nftUrl: string, i: number) => (
-            <Box maxW="sm">
-              <Image sizes='sm' src={nftUrl} key={`nft-${i}`} />
-            </Box>
-          ))}
-        </div>
       </Box>
-    </div>
+      <div className='flex my-10 flex-col text-center'>
+        <Heading as="h2" size="xl" color="white" className='mb-8'>
+          Your NFTs
+        </Heading>
+        
+        {(nfts.length > 0 && isAuthenticated) ? (
+          <Grid templateColumns='repeat(4, 1fr)' gap={10}>
+            {nfts.map((nftUrl: string, i: number) => (
+              <GridItem w='100%' h='100%'>
+                <Image sizes='sm' src={nftUrl} key={`nft-${i}`} />
+              </GridItem>
+            ))}
+          </Grid>
+        ) : (
+          <Stack direction='column'>
+            <Text fontSize='lg'>
+              You have no NFTs yet
+            </Text>
+            <Button size='sm' onClick={getMintedNFT}>Click here to check again</Button>
+          </Stack>
+        )}
+      </div>
+    </Container>
   );
 }
 
