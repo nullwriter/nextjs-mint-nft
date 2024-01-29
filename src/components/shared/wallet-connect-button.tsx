@@ -32,10 +32,10 @@ const WalletConnectButton: React.FC<WalletConnectButtonProps> = ({ bg }) => {
               <Button
                 onClick={connectWallet}
                 variant="solid"
-                bg="blue.400"
-                colorScheme="blue"
+                bg="white"
+                colorScheme="purple"
                 gap={2}
-                color="white"
+                color="black"
               >
                 <Icon as={FaEthereum} />
                 Connect wallet
