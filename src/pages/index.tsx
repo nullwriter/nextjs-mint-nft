@@ -1,7 +1,7 @@
 import Hero from '@/components/shared/hero';
 import Meta from '@/components/shared/meta';
 import MintNFT from '@/components/shared/mint-nft';
-import WalletConnectButton from '@/components/shared/wallet-connect-button';
+import WalletConnectButton from '@/components/wallet-connect/wallet-connect-button';
 
 const Home = () => {
   return (

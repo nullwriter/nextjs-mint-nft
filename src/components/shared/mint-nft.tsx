@@ -14,7 +14,6 @@ import {
   Select,
   HStack
 } from '@chakra-ui/react'
-import WalletConnectButton from './wallet-connect-button';
 import { Button } from "@chakra-ui/react";
 import { useWeb3Context, IWeb3Context } from '@/contexts/web-3-context';
 import { 
@@ -28,6 +27,9 @@ import useCheckCorrectNetwork from '@/hooks/use-check-correct-network';
 import useMintedNFTs from '@/hooks/use-minted-nfts';
 import useApproveBUSD from '@/hooks/use-approve-busd';
 import useMintNFT from '@/hooks/use-mint-nft';
+import WalletConnect from '@/components/wallet-connect';
+import MintPayment from '../mint/mint-payment';
+import NetworkStatus from '../mint/network-status';
 
 const MintNFT = () => {
   
@@ -63,50 +65,23 @@ const MintNFT = () => {
   
   return (
     <Container maxW='container.sm'>
-      <Box className="w-100 flex justify-center">
-        <Card size="lg" bg={'black'}>
-          <CardBody>
-            <WalletConnectButton bg="black" />
-          </CardBody>
-        </Card>
-      </Box>
+      <WalletConnect />
       <Box className="w-100">
         <Card size="lg" className='mt-3'>
           <CardBody className='flex justify-center'>
-            <HStack spacing='20px'>
-              <Box w="100px">
-                <Select 
-                  size="lg" 
-                  value={paymentMethod} 
-                  onChange={handleChangeCrypto}
-                  isDisabled={loadingState === 1}
-                >
-                  <option value={CRYPTO.BNB}>BNB</option>
-                  <option value={CRYPTO.BUSD}>BUSD</option>
-                </Select>
-              </Box>
-              <Button 
-                colorScheme='whatsapp' 
-                size='lg' 
-                isDisabled={!isAuthenticated || !isCorrectNetwork}
-                onClick={() => mint(paymentMethod)}
-                isLoading={loadingState === 1}
-              >
-                MINT
-              </Button>
-
-              <Text>{getMintPrice()} {paymentMethod}</Text>
-              </HStack>
+            <MintPayment 
+              {...{ 
+                paymentMethod, 
+                handleChangeCrypto, 
+                loadingState, 
+                isAuthenticated, 
+                isCorrectNetwork, 
+                mint 
+              }}
+            />
           </CardBody>
           <CardFooter>
-            {isCorrectNetwork ? (
-              <div>
-                <p className="text-green-500">{message}</p>
-                {address && <p>Address: {address}</p>}
-              </div>
-            ) : (
-              <p className="text-red-500">{message}</p>
-            )}
+            <NetworkStatus {...{ isCorrectNetwork, message, address }} />
           </CardFooter>
         </Card>
       </Box>
@@ -123,17 +98,16 @@ const MintNFT = () => {
               </GridItem>
             ))}
           </Grid>
-        ) : isAuthenticated ? (
+        ) : (
           <Stack direction='column'>
             <Text fontSize='lg'>
-              You have no TCBT yet
+              {isAuthenticated ? (
+                'You have no TCBT yet'
+              ) : (
+                'Please connect your wallet to see your TCBT'
+              )}
             </Text>
-            <Button size='sm' onClick={() => getMintedNFT(address)}>Click here to check again</Button>
           </Stack>
-        ) : (
-          <Text fontSize='lg'>
-            Please connect your wallet to see your TCBT
-          </Text>
         )}
       </Box>
     </Container>
