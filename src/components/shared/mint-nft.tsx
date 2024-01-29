@@ -48,6 +48,7 @@ const MintNFT = () => {
   /************ State ************/
   const [paymentMethod, setPaymentMethod] = React.useState<string>(CRYPTO.BNB);
   
+  /************ Functions ************/
   const handleChangeCrypto = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPaymentMethod(event.target.value);
   };
