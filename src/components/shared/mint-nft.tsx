@@ -20,7 +20,7 @@ const MintNFT = () => {
   const [miningStatus, setMiningStatus] = React.useState<number>(-1);
   const [loadingState, setLoadingState] = React.useState<number>(-1);
 
-  const mintCharacter = async (): Promise<void> => {
+  const mint = async (): Promise<void> => {
     try {
       if (contract) {
         let nftTx = await contract.safeMint(signerAddress, {
@@ -37,7 +37,7 @@ const MintNFT = () => {
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.log('Error minting character', error);
+        console.log('Error minting', error);
       }
     } finally {
       setMiningStatus(-1);
@@ -62,7 +62,7 @@ const MintNFT = () => {
               colorScheme='whatsapp' 
               size='lg' 
               isDisabled={!isAuthenticated || !isCorrectNetwork}
-              onClick={mintCharacter}
+              onClick={mint}
               isLoading={miningStatus === 0}
             >
               MINT
