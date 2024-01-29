@@ -21,9 +21,9 @@ import {
   useMintNFT
 } from '@/hooks';
 import WalletConnect from '@/components/wallet-connect';
-import MintPayment from '@/components/mint-box/mint-payment';
-import NetworkStatus from '@/components/mint-box/network-status';
-import NFTDisplay from '@/components/mint-box/nft-display';
+import MintPayment from '@/components/features/mint-box/mint-payment';
+import NetworkStatus from '@/components/features/mint-box/network-status';
+import NFTDisplay from '@/components/features/mint-box/nft-display';
 
 const MintNFT = () => {
   

@@ -1,6 +1,6 @@
 import Hero from '@/components/shared/hero';
 import Meta from '@/components/shared/meta';
-import MintNFT from '@/components/mint-box';
+import MintNFT from '@/components/features/mint-box';
 
 const Home = () => {
   return (
