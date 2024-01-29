@@ -34,7 +34,7 @@ const MintNFT = () => {
   } = useWeb3Context() as IWeb3Context;
   const { contract, signerAddress, signer } = useContract(ERC721_CONTRACT_ADDRESS, ERC721ABI);
   const { isCorrectNetwork, message } = useCheckCorrectNetwork(currentChain);
-  const { nfts, getMintedNFT } = useMintedNFTs(contract, signerAddress);
+  const { nfts, getMintedNFT } = useMintedNFTs(contract);
   const { approveBUSD, isApproving } = useApproveBUSD({
     signer,
     ERC721_CONTRACT_ADDRESS,
@@ -46,8 +46,8 @@ const MintNFT = () => {
   const [paymentMethod, setPaymentMethod] = React.useState<string>('BUSD');
   
   React.useEffect(() => {
-    getMintedNFT();
-  }, [signerAddress]);
+    getMintedNFT(address);
+  }, [address]);
   
   return (
     <Container maxW='container.sm'>
