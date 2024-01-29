@@ -996,3 +996,13 @@ export const ERC20ABI = [
 			"type": "event"
 	}
 ];
+
+export const MINT_PRICE = {
+  BNB: '0.02',
+  BUSD: '5',
+};
+
+export const CRYPTO = {
+  BNB: 'BNB',
+  BUSD: 'BUSD',
+};

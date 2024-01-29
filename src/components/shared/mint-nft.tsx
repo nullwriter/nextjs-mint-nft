@@ -16,20 +16,17 @@ import WalletConnectButton from './wallet-connect-button';
 import { Button } from "@chakra-ui/react";
 import { useWeb3Context, IWeb3Context } from '@/contexts/web-3-context';
 import { ethers } from 'ethers';
-import { ERC721ABI, ERC721_CONTRACT_ADDRESS, ERC20ABI, BUSD_CONTRACT_ADDRESS } from '@/utils/contract';
+import { 
+  ERC721ABI, 
+  ERC721_CONTRACT_ADDRESS, 
+  ERC20ABI, 
+  BUSD_CONTRACT_ADDRESS,
+  MINT_PRICE,
+  CRYPTO
+} from '@/utils/contract';
 import useContract from '@/hooks/use-contract';
 import useCheckCorrectNetwork from '@/hooks/use-check-correct-network';
 import useMintedNFTs from '@/hooks/use-minted-nfts';
-
-const MINT_PRICE = {
-  BNB: '0.02',
-  BUSD: '5',
-};
-
-const CRYPTO = {
-  BNB: 'BNB',
-  BUSD: 'BUSD',
-};
 
 const MintNFT = () => {
   const {
