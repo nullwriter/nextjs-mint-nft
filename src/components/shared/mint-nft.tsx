@@ -1,5 +1,17 @@
-import React, { use } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Box, Image, Grid, GridItem, Container, Heading, Text, Stack } from '@chakra-ui/react'
+import React from 'react';
+import { 
+  Card,  
+  CardBody, 
+  CardFooter, 
+  Box, 
+  Image, 
+  Grid, 
+  GridItem, 
+  Container, 
+  Heading, 
+  Text, 
+  Stack 
+} from '@chakra-ui/react'
 import WalletConnectButton from './wallet-connect-button';
 import { Button } from "@chakra-ui/react";
 import { useWeb3Context, IWeb3Context } from '@/contexts/web-3-context';
