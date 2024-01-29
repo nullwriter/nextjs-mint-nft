@@ -19,9 +19,9 @@ import useMintedNFTs from '@/hooks/use-minted-nfts';
 import useApproveBUSD from '@/hooks/use-approve-busd';
 import useMintNFT from '@/hooks/use-mint-nft';
 import WalletConnect from '@/components/wallet-connect';
-import MintPayment from '../mint/mint-payment';
-import NetworkStatus from '../mint/network-status';
-import NFTDisplay from '../mint/nft-display';
+import MintPayment from '@/components/mint/mint-payment';
+import NetworkStatus from '@/components/mint/network-status';
+import NFTDisplay from '@/components/mint/nft-display';
 
 const MintNFT = () => {
   
