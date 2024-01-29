@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
 
 const BSC_TEST_CHAIN_ID = '0x61';
 
@@ -9,10 +9,10 @@ const FeedbackMessage = {
 };
 
 const useCheckCorrectNetwork = (currentChain: number | null) => {
-  const [isCorrectNetwork, setIsCorrectNetwork] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
+  const [isCorrectNetwork, setIsCorrectNetwork] = React.useState<boolean>(false);
+  const [message, setMessage] = React.useState<string>('');
 
-  useEffect(() => {
+  React.useEffect(() => {
     const checkNetwork = async () => {
       if (typeof window !== 'undefined' && window.ethereum) {
         try {
