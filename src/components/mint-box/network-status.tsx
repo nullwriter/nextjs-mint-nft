@@ -1,5 +1,4 @@
 import React from 'react';
-import { CardFooter } from '@chakra-ui/react';
 
 type NetworkStatusProps = {
   isCorrectNetwork: boolean;
