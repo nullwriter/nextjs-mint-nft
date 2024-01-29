@@ -1,6 +1,5 @@
 import React from 'react';
-
-const uriBase = 'https://ipfs.io/ipfs/Qmd8GExEdHe3FTNvf3YsLXX43DBXfUyUF8W9H1o6bX8tfY/';
+import { URI_BASE } from '@/utils/contract';
 
 const useMintedNFTs = (contract: any) => {
   const [nfts, setNfts] = React.useState<string[]>([]);
@@ -13,7 +12,7 @@ const useMintedNFTs = (contract: any) => {
     try {
       const tokensOfOwnerTx = await contract.tokensOfOwner(address);
       const tokenUrls = tokensOfOwnerTx
-        .map((tokenId: bigint) => `${uriBase}${Number(tokenId)}.jpeg`);
+        .map((tokenId: bigint) => `${URI_BASE}${Number(tokenId)}.jpeg`);
       setNfts(tokenUrls);
     } catch (error) {
       console.error('Error getting tokens', error);

@@ -1,5 +1,6 @@
 export const ERC721_CONTRACT_ADDRESS = '0x7848cb48DA9Ff1e2491fb607adbe029f780d1625';
 export const BUSD_CONTRACT_ADDRESS = "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee";
+export const URI_BASE = 'https://ipfs.io/ipfs/Qmd8GExEdHe3FTNvf3YsLXX43DBXfUyUF8W9H1o6bX8tfY/';
 
 export const ERC721ABI = [
 	{
