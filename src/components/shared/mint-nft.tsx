@@ -83,9 +83,9 @@ const MintNFT = () => {
           </CardFooter>
         </Card>
         <div className='flex'>
-          {nfts.map((nftUrl: string) => (
+          {nfts.map((nftUrl: string, i: number) => (
             <Box maxW="sm">
-            <Image sizes='sm' src={nftUrl} alt='Dan Abramov' />
+              <Image sizes='sm' src={nftUrl} key={`nft-${i}`} />
             </Box>
           ))}
         </div>
