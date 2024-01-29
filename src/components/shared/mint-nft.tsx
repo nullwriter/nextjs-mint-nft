@@ -97,7 +97,7 @@ const MintNFT = () => {
           </CardFooter>
         </Card>
       </Box>
-      <div className='flex my-10 flex-col text-center'>
+      <Box className='flex my-10 flex-col text-center'>
         <Heading as="h2" size="xl" color="white" className='mb-8'>
           Your NFTs
         </Heading>
@@ -122,7 +122,7 @@ const MintNFT = () => {
             Please connect your wallet to see your TCBT
           </Text>
         )}
-      </div>
+      </Box>
     </Container>
   );
 }
