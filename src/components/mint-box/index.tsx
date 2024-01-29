@@ -13,11 +13,13 @@ import {
   MINT_PRICE,
   CRYPTO
 } from '@/utils/contract';
-import useContract from '@/hooks/use-contract';
-import useCheckCorrectNetwork from '@/hooks/use-check-correct-network';
-import useMintedNFTs from '@/hooks/use-minted-nfts';
-import useApproveBUSD from '@/hooks/use-approve-busd';
-import useMintNFT from '@/hooks/use-mint-nft';
+import { 
+  useContract, 
+  useCheckCorrectNetwork, 
+  useMintedNFTs, 
+  useApproveBUSD, 
+  useMintNFT
+} from '@/hooks';
 import WalletConnect from '@/components/wallet-connect';
 import MintPayment from '@/components/mint-box/mint-payment';
 import NetworkStatus from '@/components/mint-box/network-status';
