@@ -1007,7 +1007,7 @@ type CryptoType = {
 
 // Define constants
 export const MINT_PRICE: MintPriceType = {
-  BNB: '0.02',
+  BNB: '0.05',
   BUSD: '5',
 };
 
