@@ -4,17 +4,8 @@ import {
   CardBody, 
   CardFooter, 
   Box, 
-  Image, 
-  Grid, 
-  GridItem, 
   Container, 
-  Heading, 
-  Text, 
-  Stack,
-  Select,
-  HStack
-} from '@chakra-ui/react'
-import { Button } from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import { useWeb3Context, IWeb3Context } from '@/contexts/web-3-context';
 import { 
   ERC721ABI, 
@@ -30,6 +21,7 @@ import useMintNFT from '@/hooks/use-mint-nft';
 import WalletConnect from '@/components/wallet-connect';
 import MintPayment from '../mint/mint-payment';
 import NetworkStatus from '../mint/network-status';
+import NFTDisplay from '../mint/nft-display';
 
 const MintNFT = () => {
   
@@ -54,10 +46,6 @@ const MintNFT = () => {
   const handleChangeCrypto = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPaymentMethod(event.target.value);
   };
-
-  const getMintPrice = (): string => {
-    return MINT_PRICE[paymentMethod as keyof typeof CRYPTO];
-  }
 
   React.useEffect(() => {
     getMintedNFT(address);
@@ -85,31 +73,7 @@ const MintNFT = () => {
           </CardFooter>
         </Card>
       </Box>
-      <Box className='flex my-10 flex-col text-center'>
-        <Heading as="h2" size="xl" color="white" className='mb-8'>
-          Your NFTs
-        </Heading>
-        
-        {(nfts.length > 0 && isAuthenticated) ? (
-          <Grid templateColumns='repeat(4, 1fr)' gap={10}>
-            {nfts.map((nftUrl: string, i: number) => (
-              <GridItem w='100%' h='100%' key={`nft-${i}`}>
-                <Image sizes='sm' src={nftUrl} />
-              </GridItem>
-            ))}
-          </Grid>
-        ) : (
-          <Stack direction='column'>
-            <Text fontSize='lg'>
-              {isAuthenticated ? (
-                'You have no TCBT yet'
-              ) : (
-                'Please connect your wallet to see your TCBT'
-              )}
-            </Text>
-          </Stack>
-        )}
-      </Box>
+      <NFTDisplay {...{ nfts, isAuthenticated }} />
     </Container>
   );
 }
