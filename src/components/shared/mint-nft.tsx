@@ -11,24 +11,24 @@ import {
   Heading, 
   Text, 
   Stack,
-  useToast
 } from '@chakra-ui/react'
 import WalletConnectButton from './wallet-connect-button';
 import { Button } from "@chakra-ui/react";
 import { useWeb3Context, IWeb3Context } from '@/contexts/web-3-context';
-import { ethers } from 'ethers';
 import { 
   ERC721ABI, 
   ERC721_CONTRACT_ADDRESS,
   MINT_PRICE,
-  CRYPTO
 } from '@/utils/contract';
 import useContract from '@/hooks/use-contract';
 import useCheckCorrectNetwork from '@/hooks/use-check-correct-network';
 import useMintedNFTs from '@/hooks/use-minted-nfts';
 import useApproveBUSD from '@/hooks/use-approve-busd';
+import useMintNFT from '@/hooks/use-mint-nft';
 
 const MintNFT = () => {
+  
+  /************ Hooks ************/
   const {
     state: { isAuthenticated, address, currentChain },
   } = useWeb3Context() as IWeb3Context;
@@ -40,51 +40,11 @@ const MintNFT = () => {
     ERC721_CONTRACT_ADDRESS,
     MINT_PRICE
   });
-  const toast = useToast();
+  const { mint, loadingState } = useMintNFT({ contract, signerAddress, approveBUSD });
 
-  const [loadingState, setLoadingState] = React.useState<number>(-1);
+  /************ State ************/
   const [paymentMethod, setPaymentMethod] = React.useState<string>('BUSD');
   const [txError, setTxError] = React.useState<string>('');
-
-  const mint = async (): Promise<void> => {
-    try {
-      if (contract) {
-        setLoadingState(1);
-        let nftTx;
-        
-        if (paymentMethod === CRYPTO.BNB) {
-          nftTx = await contract.safeMint(signerAddress, {
-            value: ethers.parseEther(MINT_PRICE.BNB), // BNB payment
-          });
-        } else if (paymentMethod === CRYPTO.BUSD) {
-          const approvalSuccessful = await approveBUSD();
-          if (!approvalSuccessful) {
-            return;
-          }
-
-          const amountBUSD = ethers.parseUnits(MINT_PRICE.BUSD, 18); // BUSD payment
-          nftTx = await contract.safeMintWithBUSD(signerAddress, amountBUSD);
-        }
-
-        await nftTx.wait();
-        getMintedNFT();
-      } else {
-        console.log("Ethereum object doesn't exist!");
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        toast({
-          title: 'Error minting',
-          description: JSON.stringify(error, null, 2),
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        });
-      }
-    } finally {
-      setLoadingState(-1);
-    }
-  };
   
   React.useEffect(() => {
     getMintedNFT();
@@ -106,7 +66,7 @@ const MintNFT = () => {
               colorScheme='whatsapp' 
               size='lg' 
               isDisabled={!isAuthenticated || !isCorrectNetwork}
-              onClick={mint}
+              onClick={() => mint(paymentMethod)}
               isLoading={loadingState === 1}
               className='mt-10'
             >
