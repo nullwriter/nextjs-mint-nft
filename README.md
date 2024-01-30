@@ -33,5 +33,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 Build project:
 
 ```bash
-npm run dev
+npm run build
 ```
