@@ -35,3 +35,7 @@ Build project:
 ```bash
 npm run build
 ```
+
+#### Extra
+
+In the `contract/DeCTB.txt` you'll find an example contract to be used with this app. To deploy, use Ethereum Remix IDE and update `utils/contract.ts` addresses to interact with the contract.
