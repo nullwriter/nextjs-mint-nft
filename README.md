@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project using Ether.js to mint ERC721 N
 
 #### Set up configs
 
-In `utils/contract.ts` you will need to set the following:
+In `src/utils/contract.ts` you will need to set the following:
 
 - `ERC721_CONTRACT_ADDRESS`: the main contract
 - `BUSD_CONTRACT_ADDRESS`: ERC20 contract to use (currently set as BUSD)
@@ -16,7 +16,7 @@ In `utils/contract.ts` you will need to set the following:
 
 #### Update site metadata
 
-Change `utils/seo.ts` to fit your site information
+Change `src/utils/seo.ts` to fit your site information
 
 ## Build project
 
@@ -38,4 +38,4 @@ npm run build
 
 ## Extra
 
-In the `contract/DeCTB.txt` file you'll find an example contract to be used with this app. To deploy, use Ethereum Remix IDE and update `utils/contract.ts` addresses to interact with the contract.
+In the `contract/DeCTB.txt` file you'll find an example contract to be used with this app. To deploy, use Ethereum Remix IDE and update `src/utils/contract.ts` addresses to interact with the contract.
