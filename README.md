@@ -18,7 +18,7 @@ In `utils/contract.ts` you will need to set the following:
 
 Change `utils/seo.ts` to fit your site information
 
-### Run/Build project
+## Build project
 
 Run the development server:
 
