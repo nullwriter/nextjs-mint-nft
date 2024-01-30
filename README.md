@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project using Ether.js to mint ERC721 NFTs. It features the ability to pay with ERC20 tokens.
+This is a [Next.js](https://nextjs.org/) project using Ether.js to mint ERC721 NFTs. It features the ability to pay with different ERC20 tokens.
 
 ## Getting Started
 
