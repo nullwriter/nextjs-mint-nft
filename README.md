@@ -9,8 +9,8 @@ In `utils/contract.ts` you will need to set the following:
 - `ERC721_CONTRACT_ADDRESS`: the main contract
 - `BUSD_CONTRACT_ADDRESS`: ERC20 contract to use (currently set as BUSD)
 - `URI_BASE`: url base where NFT assets are hosted
-- `ERC721ABI`: contract ABI's
-- `ERC20ABI`
+- `ERC721ABI`: contract ABI
+- `ERC20ABI`: contract ABI
 - `MINT_PRICE`: mint price for accepted tokens
 - `CRYPTO`: accepted tokens
 
