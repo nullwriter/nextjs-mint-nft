@@ -1,23 +1,15 @@
 import React from 'react';
+import { useCheckCorrectNetwork } from '@/hooks';
 
 type NetworkStatusProps = {
-  isCorrectNetwork: boolean;
-  message: string;
-  address: string | null;
+  currentChain: number | null;
 };
 
-const NetworkStatus = ({ isCorrectNetwork, message, address }: NetworkStatusProps) => {
+const NetworkStatus = ({ currentChain }: NetworkStatusProps) => {
+  const { isCorrectNetwork, message } = useCheckCorrectNetwork(currentChain);
+
   return (
-    <>
-      {isCorrectNetwork ? (
-        <div>
-          <p className="text-green-500">{message}</p>
-          {address && <p>Address: {address}</p>}
-        </div>
-      ) : (
-        <p className="text-red-500">{message}</p>
-      )}
-    </>
+    <p className={isCorrectNetwork ? "text-green-500" : "text-red-500"}>{message}</p>
   );
 };
 
