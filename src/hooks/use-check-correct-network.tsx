@@ -8,6 +8,7 @@ const FeedbackMessage = {
   error: 'Error checking network',
 };
 
+// Check user is connected to the BSC Testnet
 const useCheckCorrectNetwork = (currentChain: number | null) => {
   const [isCorrectNetwork, setIsCorrectNetwork] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<string>('');

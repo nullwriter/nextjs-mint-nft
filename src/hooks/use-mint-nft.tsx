@@ -20,6 +20,7 @@ const useMintNFT = ({ contract, signerAddress, approveBUSD, getMintedNFT }: Mint
         setLoadingState(1);
         let nftTx;
 
+        // Initiate minting transaction with chosen payment method
         if (paymentMethod === CRYPTO.BNB) {
           nftTx = await contract.safeMint(signerAddress, {
             value: ethers.parseEther(MINT_PRICE.BNB),
@@ -35,7 +36,10 @@ const useMintNFT = ({ contract, signerAddress, approveBUSD, getMintedNFT }: Mint
         }
 
         await nftTx.wait();
+
+        // Update minted gallery
         getMintedNFT(signerAddress);
+
         toast({
           title: 'Minted NFT successfully!',
           description: 'Transaction: ' + nftTx.hash,

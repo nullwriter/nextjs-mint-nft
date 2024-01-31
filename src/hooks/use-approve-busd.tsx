@@ -19,12 +19,15 @@ const useApproveBUSD = ({signer, ERC721_CONTRACT_ADDRESS, MINT_PRICE}: ApproveBU
     setIsApproving(true);
 
     try {
+      // Initialize base ERC20 contract to interact with
       const busdContract = new ethers.Contract(BUSD_CONTRACT_ADDRESS, ERC20ABI, signer);
       const amountBUSD = ethers.parseUnits(MINT_PRICE.BUSD, 18);
 
+      // Grab user approval to spend BUSD
       let approveTx = await busdContract.approve(ERC721_CONTRACT_ADDRESS, amountBUSD);
       await approveTx.wait();
       setIsApproving(false);
+      
       return true;
     } catch (error) {
       toast({

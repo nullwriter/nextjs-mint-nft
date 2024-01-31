@@ -9,6 +9,7 @@ const useMintedNFTs = (contract: any) => {
       return;
     }
 
+    // Query readonly contract method to get all tokens owned by address
     try {
       const tokensOfOwnerTx = await contract.tokensOfOwner(address);
       const tokenUrls = tokensOfOwnerTx

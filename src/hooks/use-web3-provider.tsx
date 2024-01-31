@@ -38,8 +38,9 @@ const useWeb3Provider = () => {
           description: "No ethereum wallet found",
         });
       }
-      const provider = new ethers.BrowserProvider(ethereum);
 
+      // Request authentication from the user to connect to their wallet
+      const provider = new ethers.BrowserProvider(ethereum);
       const accounts: string[] = await provider.send("eth_requestAccounts", []);
 
       if (accounts.length > 0) {
@@ -65,6 +66,7 @@ const useWeb3Provider = () => {
     localStorage.removeItem("isAuthenticated");
   };
 
+  // Connect to the user's wallet if they have previously authenticated
   useEffect(() => {
     if (window == null) return;
 
@@ -73,6 +75,7 @@ const useWeb3Provider = () => {
     }
   }, [connectWallet, state.isAuthenticated]);
 
+  // React to changes in the user's wallet
   useEffect(() => {
     if (typeof window.ethereum === "undefined") return;
 
